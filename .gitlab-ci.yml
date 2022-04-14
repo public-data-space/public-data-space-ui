@@ -1,0 +1,83 @@
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - register
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - dind
+  image: node:12.7-alpine
+  script:
+    - yarn install
+    - yarn run build
+  only:
+    - master
+    - develop
+  artifacts:
+    paths:
+      - dist
+
+register develop:
+  stage: register
+  tags:
+    - dind
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+  services:
+    - docker:dind
+  only:
+    - develop
+  script:
+    - sleep 10
+    - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+    - docker build --pull -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} .
+    - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+    - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+    - docker push  $CI_REGISTRY_IMAGE:latest
+
+register master:
+  stage: register
+  tags:
+    - dind
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+  services:
+    - docker:dind
+  only:
+    - master
+  script:
+    - sleep 10
+    - docker login -u "$HUB_LOGIN" -p "$HUB_CREDENTIALS"
+    - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} ${HUB_ORGANIZATION}/${CI_PROJECT_NAME}:${CI_COMMIT_SHA:0:8}
+    - docker tag $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} ${HUB_ORGANIZATION}/${CI_PROJECT_NAME}:latest
+    - docker push ${HUB_ORGANIZATION}/${CI_PROJECT_NAME}:${CI_COMMIT_SHA:0:8}
+    - docker push ${HUB_ORGANIZATION}/${CI_PROJECT_NAME}:latest
+
+
+deploy to openshift:
+  stage: deploy
+  image: ebits/openshift-client
+  only:
+    refs:
+      - develop
+    variables:
+      - $OPENSHIFT_SERVER
+      - $OPENSHIFT_TOKEN
+      - $OPENSHIFT_DOMAIN
+  tags:
+    - vst
+  environment:
+    name: Testing
+  script:
+    - oc login "$OPENSHIFT_SERVER" --token="$OPENSHIFT_TOKEN" --insecure-skip-tls-verify
+    - oc import-image $CI_PROJECT_NAME --from=$CI_REGISTRY_IMAGE --confirm
+    - oc get services $CI_PROJECT_NAME 2> /dev/null || oc new-app --name=$CI_PROJECT_NAME --image-stream=$CI_PROJECT_NAME
+    - oc get routes $CI_PROJECT_NAME 2> /dev/null || oc create route edge --service=$CI_PROJECT_NAME --hostname=$CI_PROJECT_NAME-$OPENSHIFT_DOMAIN --insecure-policy=Redirect --port=8080
