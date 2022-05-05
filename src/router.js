@@ -68,6 +68,12 @@ export default new Router({
       beforeEnter: isUserAuthenticated,
     },
     {
+      path: '/dataassets/:id',
+      name: 'DataAsset',
+      component: () => import('./views/DataAsset/DataAsset.vue'),
+      beforeEnter: isUserAuthenticated,
+    },
+    {
       path: '/job',
       name: 'Jobs',
       component: () => import('./views/Job/Jobs.vue'),
