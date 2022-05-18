@@ -67,12 +67,8 @@
         <template v-slot:expanded-item="{ headers, item }">
          
           <td :colspan="headers.length">
-           <p> </p>
-              
-              <p v-html= "item.description">
-                  
-         </p>
-         
+            <p> </p> 
+            <p v-html= "item.description"></p>
           </td>
         </template>
         
@@ -118,11 +114,9 @@
             </v-btn>
           </div>
         </template>
-    <template v-slot:item.details="{ item }">
-  <!-- 
-      <a :href="'/job/' + r.id">
-        --> 
-          <a href="dataassets/3">
+        <template v-slot:item.details="{ item }">
+          <!-- <a :href="'/job/' + r.id"> --> 
+          <a v-bind:href="'dataassets/' + item.id" @mouseenter="setDataAssetItem(item)">
            Details
           </a>
         </template>
@@ -262,7 +256,7 @@ export default {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
       }).then((response) => {
-        this.dataassets = response.data;
+        this.dataassets = response.data.reverse();
       });
     },
     getDatasource(datasetid) {
@@ -412,6 +406,9 @@ export default {
         document.getElementById("truncateTitle-" + item.id).style =
           "-webkit-line-clamp:2;";
       }
+    },
+    setDataAssetItem(item) {
+      this.$store.commit("saveDataAssetItem", item);
     },
   },
 };

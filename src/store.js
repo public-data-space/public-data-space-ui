@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+import persistedStore from "./persistedStore";
 Vue.use(Vuex);
 
 let auth = {
@@ -13,6 +15,10 @@ let auth = {
 };
 
 export default new Vuex.Store({
+  modules: {
+    persistedStore,
+  },
+  plugins: [createPersistedState()],
   state: {
     authToken: null,
     snackbar: false,
