@@ -31,7 +31,7 @@
 
     <v-navigation-drawer
        
-      
+      permanent
       absolute
       expand-on-hover
       mini-variant-width="80"

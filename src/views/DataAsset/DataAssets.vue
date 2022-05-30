@@ -1,78 +1,33 @@
 <template>
   <v-card class="ml-n16">
     <v-card-title style="color: #e96a22">{{ title }}</v-card-title>
-      <v-container style="display: flex; align-items: center; padding: initial">
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          style="margin-right: 30px"
-        ></v-text-field>
-        <v-select
-          v-model="datasourceType"
-          class="selectAdapter"
-          label="Datasource Type"
-          :items="getAllDatasourceTypes"
-          clearable
-        ></v-select>
-        <v-select
-          v-model="datasourceName"
-          class="selectAdapter"
-          label="Datasource Name"
-          :items="getAllDatasourceNames"
-          clearable
-        ></v-select>
-        <v-switch
-          :disabled="dataassets.length == 0"
-          label="Published"
-          color="accent"
-          class="switch-label"
-          v-model="filterPublished"
-        ></v-switch>
-        <v-switch
-          :disabled="dataassets.length == 0"
-          label="Unpublished"
-          color="grey"
-          class="switch-label"
-          v-model="filterUnpublished"
-        ></v-switch>
-        <v-btn
-          :disabled="dataassets.length == 0"
-          v-if="checkForUnpublished"
-          @click="publishAll"
-          color="accent"
-          class="publishAll mr-1"
-          >Alle Veröffentlichen</v-btn
-        >
-        <v-btn
-          :disabled="dataassets.length == 0"
-          v-if="checkForPublished"
-          @click="unpublishAll"
-          color="grey"
-          dark
-          class="unPublishAll"
-          >Alle Zurückhalten</v-btn
-        >
-      </v-container>
-      <v-data-table
-        :headers="headers"
-        :items="filteredItems"
-        :search="search"
-        :expanded.sync="expanded"
-        show-expand
-        single-expand
-        item-key="title"
-      >
-        <template v-slot:expanded-item="{ headers, item }">
-         
-          <td :colspan="headers.length">
-            <p> </p> 
-            <p v-html= "item.description"></p>
-          </td>
-        </template>
-        
-        <!-- 
+    <v-container style="display: flex; align-items: center; padding: initial">
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line style="margin-right: 30px">
+      </v-text-field>
+      <v-select v-model="datasourceType" class="selectAdapter" label="Datasource Type" :items="getAllDatasourceTypes"
+        clearable></v-select>
+      <v-select v-model="datasourceName" class="selectAdapter" label="Datasource Name" :items="getAllDatasourceNames"
+        clearable></v-select>
+      <v-switch :disabled="dataassets.length == 0" label="Published" color="accent" class="switch-label"
+        v-model="filterPublished"></v-switch>
+      <v-switch :disabled="dataassets.length == 0" label="Unpublished" color="grey" class="switch-label"
+        v-model="filterUnpublished"></v-switch>
+      <v-btn :disabled="dataassets.length == 0" v-if="checkForUnpublished" @click="publishAll" color="accent"
+        class="publishAll mr-1">Alle Veröffentlichen</v-btn>
+      <v-btn :disabled="dataassets.length == 0" v-if="checkForPublished" @click="unpublishAll" color="grey" dark
+        class="unPublishAll">Alle Zurückhalten</v-btn>
+    </v-container>
+    <v-data-table :headers="headers" :items="filteredItems" :search="search" :expanded.sync="expanded" show-expand
+      single-expand item-key="title">
+      <template v-slot:expanded-item="{ headers, item }">
+
+        <td :colspan="headers.length">
+          <p> </p>
+          <p v-html="item.description"></p>
+        </td>
+      </template>
+
+      <!-- 
         <template v-slot:item.title="{ item }">
           <p :id="'truncateTitle-' + item.id" class="truncateText" style="-webkit-line-clamp:2;">
             {{item.title}}
@@ -86,44 +41,44 @@
        
        
        
-         -->  
-         <template v-slot:item.datasourceType="{ item }">
-          <p>
-            {{ getDatasource(item.sourceid).datasourcetype }}
-          </p>
-        </template>
-        <template v-slot:item.datasourceName="{ item }">
-          <p>
-            {{ getDatasource(item.sourceid).datasourcename }}
-          </p>
-        </template>
-        <template v-slot:item.actions="{ item }">
-          <div style="display: flex">
-            <span v-if="item.status === 'PUBLISHED'">
-              <v-btn color="accent" icon v-on:click="unpublishAction(item.id)">
-                <v-icon title="Zurückhalten" aria-hidden="true">publish</v-icon>
-              </v-btn>
-            </span>
-            <span v-if="item.status === 'APPROVED'">
-              <v-btn icon v-on:click="publishAction(item.id)">
-                <v-icon title="Veröffentlichen" aria-hidden="true">publish</v-icon>
-              </v-btn>
-            </span>
-            <v-btn icon v-on:click="deleteAction(item.id)">
-              <v-icon title="Delete" aria-hidden="true">delete</v-icon>
+         -->
+      <template v-slot:item.datasourceType="{ item }">
+        <p>
+          {{ getDatasource(item.sourceid).datasourcetype }}
+        </p>
+      </template>
+      <template v-slot:item.datasourceName="{ item }">
+        <p>
+          {{ getDatasource(item.sourceid).datasourcename }}
+        </p>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <div style="display: flex">
+          <span v-if="item.status === 'PUBLISHED'">
+            <v-btn color="accent" icon v-on:click="unpublishAction(item.id)">
+              <v-icon title="Zurückhalten" aria-hidden="true">publish</v-icon>
             </v-btn>
-          </div>
-        </template>
-        <template v-slot:item.details="{ item }">
-          <!-- <a :href="'/job/' + r.id"> --> 
-          <a v-bind:href="'dataassets/' + item.id" @mouseenter="setDataAssetItem(item)">
-           Details
-          </a>
-        </template>
+          </span>
+          <span v-if="item.status === 'APPROVED'">
+            <v-btn icon v-on:click="publishAction(item.id)">
+              <v-icon title="Veröffentlichen" aria-hidden="true">publish</v-icon>
+            </v-btn>
+          </span>
+          <v-btn icon v-on:click="deleteAction(item.id)">
+            <v-icon title="Delete" aria-hidden="true">delete</v-icon>
+          </v-btn>
+        </div>
+      </template>
+      <template v-slot:item.details="{ item }">
+        <!-- <a :href="'/job/' + r.id"> -->
+        <a style="color:black" :href="'dataassets/' + item.id" @mouseenter="setDataAssetItem(item)">
+          Details
+        </a>
+      </template>
 
-      </v-data-table>
-   
-       
+    </v-data-table>
+
+
   </v-card>
 </template>
 
@@ -176,6 +131,19 @@ export default {
       apiBase: this.$env.apiBaseUrl,
       configBase: this.$env.configManagerUrl,
     });
+
+    this.$axios({
+      method: 'GET',
+      url: new URL('/about', this.$env.apiBaseUrl),
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+      },
+    })
+      .then(response => {
+        var connector = JSON.parse(JSON.stringify(response.data));
+        this.$store.dispatch('updateDescription', connector);
+      })
+
   },
   computed: {
     sources() {
@@ -409,6 +377,19 @@ export default {
     },
     setDataAssetItem(item) {
       this.$store.commit("saveDataAssetItem", item);
+      let datasource = [];
+      for (let i in this.sources) {
+        let result = this.sources[i].sources;
+        for (let i2 in result) {
+          let result2 = this.sources[i].sources[i2].id;
+          if (item.sourceid == result2) {
+            datasource = this.sources[i].sources[i2];
+          }
+        }
+      }
+      this.$store.commit("saveDataAssetDataSourceType", datasource.datasourcetype);
+      this.$store.commit("saveDataAssetDataSourceName", datasource.datasourcename);
+
     },
   },
 };
@@ -439,13 +420,11 @@ export default {
   color: #3498db !important;
 }
 
-.theme--light.v-input--switch.v-input--is-disabled:not(.v-input--is-dirty)
-  .v-input--switch__track {
+.theme--light.v-input--switch.v-input--is-disabled:not(.v-input--is-dirty) .v-input--switch__track {
   color: #4d4d4d !important;
 }
 
-.theme--light.v-input--switch.v-input--is-disabled:not(.v-input--is-dirty)
-  .v-input--switch__thumb {
+.theme--light.v-input--switch.v-input--is-disabled:not(.v-input--is-dirty) .v-input--switch__thumb {
   color: #4d4d4d !important;
 }
 
@@ -470,10 +449,12 @@ export default {
   text-transform: none;
   width: 160px;
 }
+
 .publishAllDisabled {
   text-transform: none;
   width: 160px;
 }
+
 .publishAllDisabled .v-btn__content {
   color: #000000;
 }
@@ -485,6 +466,7 @@ export default {
 .v-application a {
   color: white;
 }
+
 .v-data-footer {
   border-bottom-left-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
@@ -525,8 +507,7 @@ export default {
   margin-right: 30px;
 }
 
-.selectAdapter
-  .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
+.selectAdapter .theme--light.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled) {
   color: rgba(255, 255, 255, 0.87) !important;
 }
 </style>

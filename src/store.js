@@ -25,6 +25,7 @@ export default new Vuex.Store({
     status: null,
     text: null,
     sources: [],
+    connectorSelfDescription: null,
   },
   mutations: {
     LOGIN(state, authToken) {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     SAVE_SOURCES(state, sources) {
       state.sources = sources;
     },
+    SET_CONNECTOR_DESCRIPTION(state, description){
+      state.connectorSelfDescription = description;
+    },
   },
   getters: {
     getAuthToken: state => state.authToken,
@@ -61,6 +65,9 @@ export default new Vuex.Store({
     },
     updateStatus(context, update) {
       context.commit('UPDATE_STATUS', update);
+    },
+    updateDescription(context, description) {
+      context.commit('SET_CONNECTOR_DESCRIPTION', description);
     },
     setSnackbar(context, snackbar) {
       context.commit('SET_SNACKBAR', snackbar);
