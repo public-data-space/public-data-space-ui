@@ -30,6 +30,16 @@
     </v-app-bar>
 
     <v-navigation-drawer
+       
+      permanent
+      absolute
+      expand-on-hover
+      mini-variant-width="80"
+      :mini-variant.sync="mini"
+      class="nav-drawer"
+    >
+    <!-- 
+<v-navigation-drawer
       permanent
       prominent
       clipped
@@ -37,6 +47,8 @@
       :expand-on-hover="useExpandDrawerOnHover"
       class="nav-drawer"
     >
+-->
+
       <v-list nav class="nav-list">
         <v-list-item class="px-2">
           <img src="@/assets/images/fokus-logo.svg" alt="Fraunhofer FOKUS Logo" class="nav-logo">
@@ -87,6 +99,7 @@ export default {
       useExpandDrawerOnHover: GLUE_CONFIG.expandDrawerOnHover,
       navItems: GLUE_CONFIG.navItems,
       snackbarTextSubmitSuccess: GLUE_CONFIG.snackbarTexts.auth.logout.success,
+      mini: true,
     };
   },
   computed: {

@@ -50,6 +50,10 @@ const glueConfig = {
         success: 'Data Asset(s) erfolgreich gelöscht!',
         error: 'Data Asset(s) konnten leider nicht gelöscht werden ...',
       },
+      keywords: {
+        success: 'Keywords für Data Asset erfolgreich generiert!',
+        error: 'Keywords für Data Asset konnten leider nicht generiert werden ...',
+      }
     },
     jobs: {
       delete: {

@@ -40,6 +40,7 @@ export default {
       })
       .then(response => {
         this.json = JSON.parse(JSON.stringify(response.data));
+        this.$store.dispatch('updateDescription', this.json);
         this.$store.dispatch('updateStatus', { status: 'success', text: this.snackbarTextLoadSuccess });
       })
       .catch(() => {
