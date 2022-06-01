@@ -24,7 +24,6 @@ const isUserNotAuthenticated = (to, from, next) => {
 };
 
 export default new Router({
-  base: 'browse',
   mode: 'history',
   routes: [
     {
