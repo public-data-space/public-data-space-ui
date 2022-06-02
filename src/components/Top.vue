@@ -8,7 +8,7 @@
     >      
       <div class="pl-1">
         <router-link to="/">
-          <img src="@/assets/images/fhg.svg" alt="Fraunhofer FOKUS Logo" class="nav-logo">
+          <img src="@/assets/images/fokus_85mm_CMYK_2016.svg" alt="Fraunhofer FOKUS Logo" class="nav-logo">
         </router-link>
       </div>
 
@@ -50,7 +50,7 @@
 -->
 
       <v-list nav class="nav-list">
-        <v-list-item class="px-2">
+        <v-list-item class="px-2">D:\Repos\public-data-space-ui\src\assets\images\fokus_85mm_CMYK_2016.svg
           <img src="@/assets/images/fokus-logo.svg" alt="Fraunhofer FOKUS Logo" class="nav-logo">
         </v-list-item>
 
@@ -85,7 +85,31 @@
         </router-link>
       </v-list>
     </v-navigation-drawer>
+    <v-footer app bottom fixed padless>
+     <v-layout justify-center>
+       <v-btn
+        class="ma-1"
+        color="grey"
+        plain
+        x-small
+        @click="imprint"
+      >
+        Impressum
+      </v-btn>
+
+      <v-btn
+        class="ma-1"
+        color="grey"
+        plain
+        x-small
+        @click="privacy"
+      >
+     Datenschutz
+      </v-btn>
+     </v-layout>
+  </v-footer>
   </div>
+  
 </template>
 
 <script>
@@ -97,7 +121,7 @@ export default {
     return {
       title: GLUE_CONFIG.title,
       useExpandDrawerOnHover: GLUE_CONFIG.expandDrawerOnHover,
-      navItems: GLUE_CONFIG.navItems,
+      navItems: (localStorage.getItem('jwt') !== null) ? GLUE_CONFIG.navItems : GLUE_CONFIG.navItemsWithoutAuth,
       snackbarTextSubmitSuccess: GLUE_CONFIG.snackbarTexts.auth.logout.success,
       mini: true,
     };
@@ -116,6 +140,13 @@ export default {
         this.$router.push({ name: 'Login' });
       }
     },
+    imprint(){
+      this.$router.push({ name: 'Imprint' });
+    },
+privacy(){
+      this.$router.push({ name: 'Privacy' });
+    }
+
   },
 };
 </script>
