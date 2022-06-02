@@ -50,7 +50,7 @@
 -->
 
       <v-list nav class="nav-list">
-        <v-list-item class="px-2">D:\Repos\public-data-space-ui\src\assets\images\fokus_85mm_CMYK_2016.svg
+        <v-list-item class="px-2">
           <img src="@/assets/images/fokus-logo.svg" alt="Fraunhofer FOKUS Logo" class="nav-logo">
         </v-list-item>
 
