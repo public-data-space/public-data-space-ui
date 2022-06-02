@@ -89,6 +89,14 @@ const glueConfig = {
       { title: 'Settings', icon: 'settings', linkTo: 'Settings' },
     ],
   },
+  navItemsWithoutAuth: {
+    top:  [
+      { title: 'Connector', icon: 'attachment', linkTo: 'Connector' },
+    ],
+    bottom: [
+     
+    ],
+  },
   dashboard: {
     title: 'Willkommen beim IDS Open Data Connector!',
     description: 'Der Open Data Connector ermöglicht die einfache Bereitstellung von Open Data unter den Spezifikationen des Industrial Data Spaces.\nDie Daten liegen dabei ursprünglich in der Open Source Datenmanagementsoftware CKAN vor.\n\nBitte aktualisieren Sie im ersten Schritt die Konfiguration des Konnektors.',

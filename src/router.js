@@ -46,7 +46,6 @@ export default new Router({
       path: '/connector',
       name: 'Connector',
       component: () => import('./views/Connector/Connector.vue'),
-      beforeEnter: isUserAuthenticated,
     },
     {
       path: '/brokers',
@@ -111,6 +110,15 @@ export default new Router({
           beforeEnter: isUserAuthenticated,
         },
       ],
+    },{
+      path: '/imprint',
+      name: 'Imprint',
+      component: () => import('./views/Footer/Imprint.vue'),
+    },
+    {
+      path: '/privacy',
+      name: 'Privacy',
+      component: () => import('./views/Footer/Privacy.vue'),
     },
   ]
 })
