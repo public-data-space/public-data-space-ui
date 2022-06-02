@@ -56,8 +56,13 @@
         <v-card>
           <v-card-title style="color: #e96a22">Files</v-card-title>
           <v-card-subtitle>
-            <v-data-table :headers="this.fileSizeHeaders" :items="getDataAssetFileSize" :items-per-page="3"
-              class="elevation-1"></v-data-table>
+            <v-data-table :headers="this.fileSizeHeaders" :items="getDataAssetFileSize" :items-per-page="3" class="elevation-1">
+              <template v-slot:item.pull="{ item }">
+                <v-btn icon v-on:click="downloadFile(item.pull)">
+                  <v-icon title="download file" aria-hidden="true" color="teal lighten-3">mdi-download</v-icon>
+                </v-btn>
+              </template>
+            </v-data-table>
           </v-card-subtitle>
         </v-card>
       </v-col>
@@ -142,8 +147,9 @@ export default {
       keywords: '',
       title: GLUE_CONFIG.dataAssets.title,
       fileSizeHeaders: [
-        { text: 'Name', value: 'name', width: "80%", align: "center" },
-        { text: 'Size', value: 'size', width: "20%", align: "center" }
+        { text: 'Name', value: 'name', width: "60%", align: "center" },
+        { text: 'Size', value: 'size', width: "20%", align: "center" },
+        { text: 'Download', value: 'pull', width: "20%", align: "center" }
       ],
       snackbarTextPublishSuccess:
         GLUE_CONFIG.snackbarTexts.dataAssets.publish.success,
@@ -276,6 +282,20 @@ export default {
           });
         });
     },
+    downloadFile(id) {
+      let fileInfo = this.getDataSourceType + "/" + (this.getDataAssetDoi.includes("/")? this.getDataAssetDoi.replace("/", "<slash>") : this.getDataAssetDoi) + "/" + id;
+      this.$axios({
+        method: 'GET',
+        url: new URL('/api/dataassets/getResource/' + fileInfo , this.$env.apiBaseUrl),
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        },
+      })
+      .then(response => {
+        console.log(response.data)
+        window.open(response.data)
+      })
+    },
   },
   computed: {
     sources() {
@@ -316,7 +336,8 @@ export default {
       this.$store.state.persistedStore.dataAssetItem.distributions.forEach(e => {
         disFilesSizes.push({
           "name": e.filename,
-          "size": e.additionalmetadata.byte_size[0]
+          "size": e.additionalmetadata.byte_size[0],
+          "pull": e.id,
         })
       });
       return disFilesSizes;
