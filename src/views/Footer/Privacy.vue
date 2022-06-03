@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>Datenschutzerklärung</h1>
-    <h3>Datenschutzinformation Quartier der Zukunft - Open Data Portal</h3>
+    <h3>Datenschutzinformation Public Data Space</h3>
     <p>
-      Im Rahmen der Nutzung des Quartier der Zukunft - Open Data Portals (Webauftritt und App) werden personenbezogene
+      Im Rahmen der Nutzung dieser Webseite werden personenbezogene
       Daten von Ihnen durch uns als den für die Datenverarbeitung Verantwortlichen
       verarbeitet und für die Dauer gespeichert, die zur Erfüllung der festgelegten Zwecke und gesetzlicher
       Verpflichtungen erforderlich ist. Im Folgenden informieren wir Sie darüber, um welche Daten
@@ -24,6 +24,7 @@
       <br>80686 München
       <br>für das Fraunhofer Institut für Offene Kommunikationssysteme
       <br>(im Folgenden „Fraunhofer-FOKUS“)
+      <br />
       <br>E-Mail: info@fokus.fraunhofer.de
       <br><br>
       Der Datenschutzbeauftragte von Fraunhofer ist unter der o.g. Anschrift, zu Hd. Datenschutzbeauftragter bzw. unter
@@ -36,7 +37,7 @@
 
 
     <h3>Verarbeitung personenbezogener Daten und Zwecke der Verarbeitung</h3>
-    <p>Wenn Sie das Quartier der Zukunft - Open Data Portal besuchen, speichern die Server unseres Dienstanbieters
+    <p>Wenn Sie unsere Webseite besuchen, speichern unsere Server
       temporär jeden Zugriff Ihres Endgerätes in einer Protokolldatei.
       Folgende Daten werden erfasst und bis zur automatisierten Löschung gespeichert:</p>
     <ul>
@@ -49,7 +50,7 @@
       <li>Betriebssystem</li>
       <li>Webseite, von der aus der Zugriff erfolgt (Referrer-URL)</li>
     </ul>
-
+    <br />
     <p>
       Wir verwenden diese Daten, um beispielsweise Funktionen zu aktivieren, Betrug zu verhindern, Sicherheitsmaßnahmen
       zu implementieren, die Serververfügbarkeit sicherzustellen, App-Abstürze zu minimieren,
@@ -59,7 +60,7 @@
 
     <p>Rechtsgrundlagen für die vorstehenden Verarbeitungen sind</p>
     <ul>
-      <li>für die Verarbeitung für den Besuch der App nach den Nummern 1-2 Art. 6 Abs. 1 S.1 lit. b DSGVO
+      <li>für die Verarbeitung für den Besuch der App Webseite den Nummern 1-2 Art. 6 Abs. 1 S.1 lit. b DSGVO
         (Erforderlichkeit für die Erfüllung des App-Nutzungsvertragsverhältnisses),</li>
       <li>für die Verarbeitungen nach Nummer 3 Art. 6 Abs. 1 S.1 lit. c DSGVO (rechtliche Verpflichtung zur Umsetzung
         technisch-organisatorischer Maßnahmen zur Sicherung der Datenverarbeitung nach Art. 32 DSGVO) und Art. 6 Abs. 1
@@ -73,7 +74,7 @@
         Speicherung für den jeweiligen Zweck nicht mehr erforderlich ist.</li>
     </ul>
 
-
+<br/>
     <h3>Weitergabe von personenbezogenen Daten</h3>
     <p>
       Außer in den zuvor genannten Fällen zur Nutzung der App, geben wir Ihre personenbezogenen Daten nur an Dritte,
@@ -104,15 +105,7 @@
 
     <h3>Analyse/Tracking</h3>
     <p>
-      Das Quartier der Zukunft - Open Data Portal setzt keine Cookies ein.
-    </p>
-
-    <h3>Eingesetzte Auftragsverarbeiter</h3>
-    <p>Folgende Organisationen, Unternehmen bzw. Personen wurden vom Betreiber dieser Website mit
-      der Verarbeitung von Daten beauftragt:</p>
-    <p>Urban Software Institute GmbH,
-      <br>Zwickauer Str. 223a,
-      <br>09116 Chemnitz, Germany
+      Auf dieser Webseite werden keine Cookies eingesetzt und keine Webanalyse durchgeführt.
     </p>
 
     <h3>Betroffenenrechte</h3>
@@ -146,8 +139,9 @@
         Aufsichtsbehörde ihres üblichen Aufenthaltsortes oder Arbeitsplatzes oder unseres Unternehmenssitzes wenden.
       </li>
     </ul>
-
-    <div class="alert alert-success" role="alert">
+    <br/>
+    <v-card color="light-green lighten-4">
+      <v-card-text>
       <p><strong>Information über Ihr Widerspruchsrecht nach Art. 21 DSGVO</strong></p>
       <p>
         Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die
@@ -172,11 +166,13 @@
         Möchten Sie von Ihrem Widerspruchsrecht Gebrauch machen, genügt eine E-Mail an datenschutz@zv.fraunhofer.de.
 
       </p>
-    </div>
+      </v-card-text>
+    </v-card>
+    <br/>
 
     <h3>Datensicherheit</h3>
     <p>
-      Der Backend-Server des Quartier der Zukunft - Open Data Portals sowie die Ausgaben selbst werden mit dem allgemein
+      Der Backend-Server dieser Webseite sowie die Ausgaben selbst werden mit dem allgemein
       üblichen und sicheren Standard TLS (Transport Layer Security) verschlüsselt übertragen. TLS ist ein sicherer und
       erprobter Standard, der z.B. auch beim Onlinebanking Verwendung findet.
       Sie erkennen eine sichere TLS-Verbindung unter anderem an dem angehängten s am http (also https://..) in der
@@ -198,7 +194,7 @@
       Durch die Weiterentwicklung unseres Angebots oder aufgrund geänderter gesetzlicher bzw. behördlicher Vorgaben kann
       es notwendig werden, diese Datenschutzinformation zu ändern.
       Die jeweils aktuelle Datenschutzinformation kann jederzeit auf der Webseite unter Link auf diese Seite:
-      https://opendata.quartier-der-zukunft.de/privacypolicy von Ihnen abgerufen und ausgedruckt werden.
+      https://ids.fokus.fraunhofer.de/privacy von Ihnen abgerufen und ausgedruckt werden.
     </p>
 
     <h3>Salvatorische Klausel</h3>
@@ -206,6 +202,7 @@
       Sollten einzelne Bestimmungen dieser Datenschutzerklärung ganz oder in Teilen unwirksam oder undurchführbar sein
       oder werden, berührt dies nicht die Wirksamkeit der übrigen Bestimmungen. Entsprechendes gilt im Fall von Lücken.
     </p>
+    <br />
   </div>
 </template>
 

@@ -19,26 +19,20 @@
       http://www.fraunhofer.de
     </p>
     <p>
-      Umsatzsteuer-Identifikationsnummer gemäß § 27 a<br />
+      <b>Umsatzsteuer-Identifikationsnummer gemäß § 27 a</b><br />
       Umsatzsteuergesetz: DE 129515865<br />
       <br />
-      Registergericht<br />
+      <b>Registergericht</b><br />
       Amtsgericht München<br />
       Eingetragener Verein<br />
       Register-Nr. VR 4461<br />
       <br />
-      Verantwortlicher Redakteur:<br />
+      <b>Verantwortlicher Redakteur</b><br />
       fabian.kirstein@fokus.fraunhofer.de<br />
       <br />
-      Hinweis: Bei allgemeinen Fragen zum Institut, wenden Sie sich bitte an die unter Kontakt angegebenen
-      Ansprechpartner<br />
-      <br />
-      Vorstand<br />
-      <br />
-      Prof. Dr.-Ing. Reimund Neugebauer, Präsident, Unternehmenspolitik und Forschung<br />
-      Prof. Dr. Ralf Boris Wehrspohn, Technologiemarketing und Geschäftsmodelle<br />
-      Prof. Dr. Alexander Kurz, Personal, Recht und Verwertung<br />
-      Dipl.-Kfm. Andreas Meuer, Finanzen und Digitalisierung<br />
+      <b>Vorstand</b><br />
+      Prof. Dr.-Ing. Reimund Neugebauer | Präsident<br />
+      Prof. Dr. Alexander Kurz | Mitglied des Vorstands<br />
     </p>
     <h2>Nutzungsrechte</h2>
     <p>
@@ -81,6 +75,7 @@
       gemacht. Das Fehlen einer solchen Kennzeichnung bedeutet jedoch nicht, dass es sich um einen freien Namen, ein
       freies Bild oder einen freien Text im Sinne des Markenzeichenrechts handelt.
     </p>
+    <br />
   </div>
 </template>
 
