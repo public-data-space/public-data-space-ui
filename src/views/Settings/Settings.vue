@@ -4,8 +4,8 @@
       <v-card-title style="color:#E96A22">{{ title }}</v-card-title>
       <v-card-text>
         {{ description }}
-        <v-text-field v-model="configuration.title" label="Konnektor Titel" id="connectorTitle" name="connectorTitle"></v-text-field>
-        <v-text-field v-model="configuration.url" label="Konnektor URL" id="connectorURL" name="connectorURL"></v-text-field>
+        <v-text-field v-model="configuration.title" label="Connector Titel" id="connectorTitle" name="connectorTitle"></v-text-field>
+        <v-text-field v-model="configuration.url" label="Connector URL" id="connectorURL" name="connectorURL"></v-text-field>
         <v-text-field v-model="configuration.maintainer" label="Maintainer" id="connectorMaintainer" name="connectorMaintainer"></v-text-field>
         <v-text-field v-model="configuration.curator" label="Curator" id="connectorCurator" name="connectorCurator"></v-text-field>
         <v-select v-model="geoname"

@@ -14,7 +14,7 @@ const glueConfig = {
 
   //apiBaseUrl: 'https://public-data-space-connector-indaspaceplus.apps.osc.fokus.fraunhofer.de/',
 
-  title: 'IDS OPEN DATA CONNECTOR',
+  title: 'Public Data Space',
   expandDrawerOnHover: false,
   snackbarTimeout: 5000,
   snackbarTexts: {
@@ -89,11 +89,20 @@ const glueConfig = {
       { title: 'Settings', icon: 'settings', linkTo: 'Settings' },
     ],
   },
+  navItemsWithoutAuth: {
+    top:  [
+      { title: 'Connector', icon: 'attachment', linkTo: 'Connector' },
+    ],
+    bottom: [
+
+    ],
+  },
   dashboard: {
-    title: 'Willkommen beim IDS Open Data Connector!',
-    description: 'Der Open Data Connector ermöglicht die einfache Bereitstellung von Open Data unter den Spezifikationen des Industrial Data Spaces.\nDie Daten liegen dabei ursprünglich in der Open Source Datenmanagementsoftware CKAN vor.\n\nBitte aktualisieren Sie im ersten Schritt die Konfiguration des Konnektors.',
+    title: 'Willkommen beim Public Data Space Connector.',
+    description: 'Der Public Data Space Connector ermöglicht die einfache Bereitstellung von Open Data unter den Spezifikationen des International Data Spaces.\nDie Daten liegen dabei ursprünglich in verschiedenen Quellsystemen vor.',
     updateSettings: 'Konfiguration aktualisieren',
     jobs: 'Jobs verwalten',
+    connector: 'Connector Endpoint',
     dataSources: 'Data Sources verwalten',
     dataAssets: 'Data Assets verwalten',
     dataAssetsPublished: 'Veröffentlichte Data Assets',
@@ -117,8 +126,8 @@ const glueConfig = {
     text: 'Bitte wählen Sie eine Datenquelle aus, welcher ein weiteres Data Asset hinzugefügt werden soll oder fügen Sie eine weitere Datenquelle des Typs hinzu.',
   },
   settings: {
-    title: 'Konfiguration des Open Data Konnektors',
-    description: 'Konfigurieren Sie ihren Konnektor zur korrekten Darstellung des IDS Informationsmodells.',
+    title: 'Konfiguration des Connectors',
+    description: 'Konfigurieren Sie ihren Connector zur korrekten Darstellung des IDS Informationsmodells.',
   },
   login: {
     title: 'Login',
