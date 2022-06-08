@@ -58,6 +58,9 @@
           <v-card-subtitle>
             <v-data-table :headers="this.fileSizeHeaders" :items="getDataAssetFileSize" :items-per-page="3" class="elevation-1">
               <template v-slot:item.pull="{ item }">
+                <v-btn icon v-on:click="downloadFile(item.pull, item.name)">
+                  <v-icon title="download file" aria-hidden="true" color="teal lighten-3">mdi-download</v-icon>
+                </v-btn>
               </template>
             </v-data-table>
           </v-card-subtitle>
@@ -145,7 +148,8 @@ export default {
       title: GLUE_CONFIG.dataAssets.title,
       fileSizeHeaders: [
         { text: 'Name', value: 'name', width: "60%", align: "center" },
-        { text: 'Size', value: 'size', width: "20%", align: "center" }
+        { text: 'Size', value: 'size', width: "20%", align: "center" },
+        { text: 'Download', value: 'pull', width: "20%", align: "center" }
       ],
       snackbarTextPublishSuccess:
         GLUE_CONFIG.snackbarTexts.dataAssets.publish.success,
@@ -278,18 +282,27 @@ export default {
           });
         });
     },
-    downloadFile(id) {
-      let fileInfo = this.getDataSourceType + "/" + (this.getDataAssetDoi.includes("/")? this.getDataAssetDoi.replace("/", "<slash>") : this.getDataAssetDoi) + "/" + id;
+    downloadFile(id, name) {
+      let fileInfo = id + "/" + this.getDataSourceType;
       this.$axios({
-        method: 'GET',
-        url: new URL('/api/dataassets/getResource/' + fileInfo , this.$env.apiBaseUrl),
+        method: "GET",
+        url: new URL("api/dataassets/getResource/" + fileInfo , this.$env.apiBaseUrl),
+        responseType: 'blob',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
       })
       .then(response => {
-        window.open(response.data)
-      })
+        let fileType = name.split(".")[name.split(".").length -1];
+        let blob = new Blob([response.data], {type: "application/" + fileType});
+        let downloadElement = document.createElement('a');
+        downloadElement.href = window.URL.createObjectURL(blob);
+        downloadElement.download = name.replace('%', '_');
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        window.URL.revokeObjectURL(downloadElement.href);
+        document.body.removeChild(downloadElement)
+      });
     },
   },
   computed: {
