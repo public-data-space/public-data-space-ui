@@ -316,13 +316,13 @@ export default {
       return this.$store.state.persistedStore.dataAssetItem.title;
     },
     getDataAssetDoi() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.pid[0];
+      return this.$store.state.persistedStore.dataAssetItem.pid;
     },
     getDataAssetAuthor() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.author[0];
+      return this.$store.state.persistedStore.dataAssetItem.author;
     },
     getDataAssetAuthorAccessLevel() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.data_access_level[0];
+      return this.$store.state.persistedStore.dataAssetItem.data_access_level;
     },
     getDataAssetDescription() {
       return this.$store.state.persistedStore.dataAssetItem.description;
@@ -344,7 +344,7 @@ export default {
       this.$store.state.persistedStore.dataAssetItem.distributions.forEach(e => {
         disFilesSizes.push({
           "name": e.filename,
-          "size": e.additionalmetadata.byte_size[0],
+          "size": e.byte_size,
           "pull": e.id,
         })
       });
