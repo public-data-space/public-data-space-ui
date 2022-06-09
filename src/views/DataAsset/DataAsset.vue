@@ -39,6 +39,11 @@
         </v-card>
         <br>
         <v-card>
+          <v-card-title style="color: #e96a22">Publisher</v-card-title>
+          <v-card-subtitle v-text="getPublisher"> </v-card-subtitle>
+        </v-card>
+        <br>
+        <v-card>
           <v-card-title style="color: #e96a22">Doi</v-card-title>
           <v-card-subtitle v-text="getDataAssetDoi"></v-card-subtitle>
         </v-card>
@@ -297,7 +302,7 @@ export default {
         let blob = new Blob([response.data], {type: "application/" + fileType});
         let downloadElement = document.createElement('a');
         downloadElement.href = window.URL.createObjectURL(blob);
-        downloadElement.download = name.replace('%', '_');
+        downloadElement.download = name;
         document.body.appendChild(downloadElement);
         downloadElement.click();
         window.URL.revokeObjectURL(downloadElement.href);
@@ -317,6 +322,9 @@ export default {
     },
     getDataAssetDoi() {
       return this.$store.state.persistedStore.dataAssetItem.pid;
+    },
+    getPublisher() {
+      return this.$store.state.persistedStore.dataAssetItem.publisher;
     },
     getDataAssetAuthor() {
       return this.$store.state.persistedStore.dataAssetItem.author;
@@ -344,7 +352,7 @@ export default {
       this.$store.state.persistedStore.dataAssetItem.distributions.forEach(e => {
         disFilesSizes.push({
           "name": e.filename,
-          "size": e.byte_size,
+          "size": (e.byte_size / 1000) < 1? e.byte_size + "_Byte" : ((e.byte_size / 1000) < 1000? (e.byte_size / 1000) + "_KB" : (e.byte_size / 1000) / 100 + "_MB"),
           "pull": e.id,
         })
       });
