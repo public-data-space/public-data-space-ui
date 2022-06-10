@@ -39,6 +39,11 @@
         </v-card>
         <br>
         <v-card>
+          <v-card-title style="color: #e96a22">Publisher</v-card-title>
+          <v-card-subtitle v-text="getPublisher"> </v-card-subtitle>
+        </v-card>
+        <br>
+        <v-card>
           <v-card-title style="color: #e96a22">Doi</v-card-title>
           <v-card-subtitle v-text="getDataAssetDoi"></v-card-subtitle>
         </v-card>
@@ -58,6 +63,9 @@
           <v-card-subtitle>
             <v-data-table :headers="this.fileSizeHeaders" :items="getDataAssetFileSize" :items-per-page="3" class="elevation-1">
               <template v-slot:item.pull="{ item }">
+                <v-btn icon v-on:click="downloadFile(item.pull, item.name)">
+                  <v-icon title="download file" aria-hidden="true" color="teal lighten-3">mdi-download</v-icon>
+                </v-btn>
               </template>
             </v-data-table>
           </v-card-subtitle>
@@ -145,7 +153,8 @@ export default {
       title: GLUE_CONFIG.dataAssets.title,
       fileSizeHeaders: [
         { text: 'Name', value: 'name', width: "60%", align: "center" },
-        { text: 'Size', value: 'size', width: "20%", align: "center" }
+        { text: 'Size', value: 'size', width: "20%", align: "center" },
+        { text: 'Download', value: 'pull', width: "20%", align: "center" }
       ],
       snackbarTextPublishSuccess:
         GLUE_CONFIG.snackbarTexts.dataAssets.publish.success,
@@ -278,18 +287,27 @@ export default {
           });
         });
     },
-    downloadFile(id) {
-      let fileInfo = this.getDataSourceType + "/" + (this.getDataAssetDoi.includes("/")? this.getDataAssetDoi.replace("/", "<slash>") : this.getDataAssetDoi) + "/" + id;
+    downloadFile(id, name) {
+      let fileInfo = id + "/" + this.getDataSourceType;
       this.$axios({
-        method: 'GET',
-        url: new URL('/api/dataassets/getResource/' + fileInfo , this.$env.apiBaseUrl),
+        method: "GET",
+        url: new URL("api/dataassets/getResource/" + fileInfo , this.$env.apiBaseUrl),
+        responseType: 'blob',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('jwt')}`,
         },
       })
       .then(response => {
-        window.open(response.data)
-      })
+        let fileType = name.split(".")[name.split(".").length -1];
+        let blob = new Blob([response.data], {type: "application/" + fileType});
+        let downloadElement = document.createElement('a');
+        downloadElement.href = window.URL.createObjectURL(blob);
+        downloadElement.download = name;
+        document.body.appendChild(downloadElement);
+        downloadElement.click();
+        window.URL.revokeObjectURL(downloadElement.href);
+        document.body.removeChild(downloadElement)
+      });
     },
   },
   computed: {
@@ -303,13 +321,16 @@ export default {
       return this.$store.state.persistedStore.dataAssetItem.title;
     },
     getDataAssetDoi() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.pid[0];
+      return this.$store.state.persistedStore.dataAssetItem.pid;
+    },
+    getPublisher() {
+      return this.$store.state.persistedStore.dataAssetItem.publisher;
     },
     getDataAssetAuthor() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.author[0];
+      return this.$store.state.persistedStore.dataAssetItem.author;
     },
     getDataAssetAuthorAccessLevel() {
-      return this.$store.state.persistedStore.dataAssetItem.additionalmetadata.data_access_level[0];
+      return this.$store.state.persistedStore.dataAssetItem.data_access_level;
     },
     getDataAssetDescription() {
       return this.$store.state.persistedStore.dataAssetItem.description;
@@ -331,7 +352,7 @@ export default {
       this.$store.state.persistedStore.dataAssetItem.distributions.forEach(e => {
         disFilesSizes.push({
           "name": e.filename,
-          "size": e.additionalmetadata.byte_size[0],
+          "size": (e.byte_size / 1000) < 1? e.byte_size + "_Byte" : ((e.byte_size / 1000) < 1000? (e.byte_size / 1000) + "_KB" : (e.byte_size / 1000) / 100 + "_MB"),
           "pull": e.id,
         })
       });
